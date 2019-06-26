@@ -30,7 +30,7 @@ class Product{
             'coverage' => ['single' => ['FQDN domain']],
             'period'   => ['annually', 'biennially']
         ],
-        'TrustOcean DV Multi Domain Secure SSL '         => [
+        'TrustOcean DV Multi Domain Secure SSL'         => [
             'id'       => 47,
             'type'     => 'DV',
             'coverage' => ['san' => ['FQDN domain']],

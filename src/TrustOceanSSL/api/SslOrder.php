@@ -80,6 +80,7 @@ class sslOrder extends Order{
             'csr_code',
             'contact_email',
             'dcv_method',
+            'unique_id'
         ];
         if($this->product->isMultiDomainProduct() === TRUE){
             $requiredParamKeys[] = 'domains';
