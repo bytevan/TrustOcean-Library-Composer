@@ -1,1 +1,1 @@
-Composer Library for TrustOcean SSL Reseller API in PHP
+Composer Library for TrustOgitcean SSL Reseller API in PHP
