@@ -4,7 +4,7 @@ namespace Londry\TrustOceanSSL\api;
 use Londry\TrustOceanSSL\model\Order;
 use Londry\TrustOceanSSL\TrustoceanException;
 
-class sslOrder extends Order{
+class SslOrder extends Order{
 
     public function __construct($username, $token)
     {
