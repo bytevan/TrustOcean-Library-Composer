@@ -31,7 +31,7 @@ class Csr{
         if($commonName->is_ip()){
             throw new TrustoceanException('Invalid CommonName of your CSR, please choose a valid domain name except an IP address.', 25005);
         }
-        if(trim($commonName) !== $commonName){
+        if(trim($commonName) !== (string) $commonName){
             throw new TrustoceanException('Invalid CommonName of your CSR, please remove any spaces.', 25006);
         }
         if(trim($commonName) == ""){
@@ -114,11 +114,21 @@ class Csr{
         if($fields === FALSE){
             throw new TrustoceanException('Invalid PEM Format CSR Code, Cannot decode your CSR code.', 25003);
         }
-        $this->setCommonName($fields['CN']);
-        $this->setCountryCode($fields['C']);
-        $this->setEmailAddress($fields['emailAddress']);
-        $this->setOrganizationName($fields['O']);
-        $this->setOrganizationalUnitName($fields['OU']);
+        if (isset($fields['CN'])) {
+            $this->setCommonName($fields['CN']);
+        }
+        if (isset($fields['C'])) {
+            $this->setCountryCode($fields['C']);
+        }
+        if (isset($fields['emailAddress'])) {
+            $this->setEmailAddress($fields['emailAddress']);
+        }
+        if (isset($fields['O'])) {
+            $this->setOrganizationName($fields['O']);
+        }
+        if (isset($fields['OU'])) {
+            $this->setOrganizationalUnitName($fields['OU']);
+        }
         $this->validCsrContent = trim($csrPemCode);
     }
 
