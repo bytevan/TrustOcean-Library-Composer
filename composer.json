@@ -1,5 +1,5 @@
 {
-    "name": "londry/trustoceanssl-composer-library",
+    "name": "trustocean/sdk",
     "description": "Composer Library for TrustOcean SSL Reseller API in PHP",
     "type": "library",
     "license": "MIT",
