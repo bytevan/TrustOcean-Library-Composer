@@ -16,7 +16,7 @@ Please join our developer QQ Group(ID 941598653), or use submit issue on GitHub.
 ## Installation
 Use your composer:
 ```php
-composer require londry/trustoceanssl-composer-library 
+composer require trustocean/sdk
 ```
 ## Get_Instance_of_SslOrder_API
 Before you try access api, you need add your local/server public ip address to the whitelist in your TrustOcean API Account.
