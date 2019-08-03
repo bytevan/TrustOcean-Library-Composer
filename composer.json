@@ -10,9 +10,6 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {
-        "blobfolio/blob-domain": "dev-master"
-    },
     "autoload": {
         "psr-4": {
             "Londry\\TrustOceanSSL\\": "src\/TrustOceanSSL"

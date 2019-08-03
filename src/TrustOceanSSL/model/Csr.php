@@ -1,18 +1,19 @@
 <?php
+
 namespace Londry\TrustOceanSSL\model;
-use blobfolio\domain\domain;
+
 use Londry\TrustOceanSSL\TrustoceanException;
 
-class Csr{
-
-
+class Csr
+{
     /**
      * @var string
      * Validated CSR content
      */
     protected $validCsrContent;
 
-    public function getValidaCsrContent(){
+    public function getValidaCsrContent()
+    {
         return $this->validCsrContent;
     }
 
@@ -23,12 +24,9 @@ class Csr{
      * @throws TrustoceanException
      * Validate and set commonName
      */
-    private function setCommonName($commonName){
-        $commonName = new domain($commonName);
-        if(trim($commonName) !== (string) $commonName){
-            throw new TrustoceanException('Invalid CommonName of your CSR, please remove any spaces.', 25006);
-        }
-        if(trim($commonName) == ""){
+    private function setCommonName($commonName)
+    {
+        if (trim($commonName) == "") {
             throw new TrustoceanException('Invalid CommonName of your CSR.', 25007);
         }
         $this->commonName = $commonName;
@@ -37,7 +35,8 @@ class Csr{
     /**
      * @return string
      */
-    public function getCommonName(){
+    public function getCommonName()
+    {
         return $this->commonName;
     }
 
@@ -49,11 +48,13 @@ class Csr{
      */
     protected $emailAddress;
 
-    private function setEmailAddress($emailAddress){
+    private function setEmailAddress($emailAddress)
+    {
         $this->emailAddress = $emailAddress;
     }
 
-    public function getEmailAddress(){
+    public function getEmailAddress()
+    {
         return $this->emailAddress;
     }
 
@@ -63,11 +64,13 @@ class Csr{
      */
     protected $organizationName;
 
-    private function setOrganizationName($organizationName){
+    private function setOrganizationName($organizationName)
+    {
         $this->organizationName = $organizationName;
     }
 
-    public function getOrganizationName(){
+    public function getOrganizationName()
+    {
         return $this->organizationName;
     }
 
@@ -77,10 +80,12 @@ class Csr{
      */
     protected $organizationalUnitName;
 
-    private function setOrganizationalUnitName($organizationalUnitName){
+    private function setOrganizationalUnitName($organizationalUnitName)
+    {
         $this->organizationalUnitName = $organizationalUnitName;
     }
-    public function getOrganizatinalUnitName(){
+    public function getOrganizatinalUnitName()
+    {
         return $this->organizationalUnitName;
     }
 
@@ -90,10 +95,12 @@ class Csr{
      */
     protected $countryCode;
 
-    private function setCountryCode($countryCode){
+    private function setCountryCode($countryCode)
+    {
         $this->countryCode = $countryCode;
     }
-    public function getCountryCode(){
+    public function getCountryCode()
+    {
         return $this->countryCode;
     }
 
@@ -105,7 +112,7 @@ class Csr{
     public function __construct($csrPemCode)
     {
         $fields = openssl_csr_get_subject($csrPemCode, TRUE);
-        if($fields === FALSE){
+        if ($fields === FALSE) {
             throw new TrustoceanException('Invalid PEM Format CSR Code, Cannot decode your CSR code.', 25003);
         }
         if (isset($fields['CN'])) {
@@ -130,7 +137,8 @@ class Csr{
      * @return bool
      * Is the CommonName is a Wildcard Domain Name?
      */
-    public function isWildcardCommonName(){
+    public function isWildcardCommonName()
+    {
         return strstr($this->commonName, '*') !== FALSE;
     }
 
@@ -138,7 +146,8 @@ class Csr{
      * @return bool
      * Is the EmailAddress is empty?
      */
-    public function isEmptyEmailAddress(){
+    public function isEmptyEmailAddress()
+    {
         return $this->emailAddress == "";
     }
 }

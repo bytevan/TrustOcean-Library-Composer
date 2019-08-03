@@ -1,10 +1,11 @@
 <?php
+
 namespace Londry\TrustOceanSSL\model;
 
-use blobfolio\domain\domain;
 use Londry\TrustOceanSSL\TrustoceanException;
 
-class Order{
+class Order
+{
 
     /**
      * @var string
@@ -39,7 +40,8 @@ class Order{
      * @param $CertificateType
      * Set the product pid for Api Order.
      */
-    public function setCertificateType($CertificateType){
+    public function setCertificateType($CertificateType)
+    {
         $this->product = new Product($CertificateType);
         $this->pid = $this->product->getPid();
     }
@@ -50,9 +52,10 @@ class Order{
      * @param $period
      * @throws TrustoceanException
      */
-    public function setCertificatePeriod($period){
-        if(!in_array($period, $this->product->getAvaliablePeriod())){
-            throw new TrustoceanException('It\'s not a valid Period('.$period.') option for Product '.$this->product->getName(), 25001);
+    public function setCertificatePeriod($period)
+    {
+        if (!in_array($period, $this->product->getAvaliablePeriod())) {
+            throw new TrustoceanException('It\'s not a valid Period(' . $period . ') option for Product ' . $this->product->getName(), 25001);
         }
         $this->period = $period;
     }
@@ -63,8 +66,9 @@ class Order{
      * @param Csr $csrCode
      * @throws TrustoceanException
      */
-    public function setCsrCode(Csr $csrCode){
-        if(!$csrCode->isEmptyEmailAddress()){
+    public function setCsrCode(Csr $csrCode)
+    {
+        if (!$csrCode->isEmptyEmailAddress()) {
             $this->contact_email = $csrCode->getEmailAddress();
         }
         $this->csr_code = $csrCode->getValidaCsrContent();
@@ -73,7 +77,8 @@ class Order{
     /**
      * @return null|string
      */
-    public function getCsrCode(){
+    public function getCsrCode()
+    {
         return $this->csr_code;
     }
 
@@ -85,7 +90,8 @@ class Order{
     /**
      * @return null|string
      */
-    public function getCaCode(){
+    public function getCaCode()
+    {
         return $this->ca_code;
     }
 
@@ -97,7 +103,8 @@ class Order{
     /**
      * @return null|string
      */
-    public function getCertCode(){
+    public function getCertCode()
+    {
         return $this->cert_code;
     }
     protected $contact_email = NULL;
@@ -105,14 +112,16 @@ class Order{
     /**
      * @param string $contactEmail
      */
-    public function setContactEmail($contactEmail){
+    public function setContactEmail($contactEmail)
+    {
         $this->contact_email = $contactEmail;
     }
 
     /**
      * @return null|string
      */
-    public function getContactEmail(){
+    public function getContactEmail()
+    {
         return $this->contact_email;
     }
 
@@ -129,14 +138,16 @@ class Order{
     /**
      * @param array $dcvMethodArray
      */
-    public function setDcvMethod($dcvMethodArray){
+    public function setDcvMethod($dcvMethodArray)
+    {
         $this->dcv_method = implode(',', $dcvMethodArray);
     }
 
     /**
      * @return array
      */
-    public function getDcvMethod(){
+    public function getDcvMethod()
+    {
         return explode(',', $this->dcv_method);
     }
 
@@ -150,14 +161,16 @@ class Order{
     /**
      * @param string $uniqueId
      */
-    public function setUniqueId($uniqueId){
+    public function setUniqueId($uniqueId)
+    {
         $this->unique_id = $uniqueId;
     }
 
     /**
      * @return string
      */
-    public function getUniqueId(){
+    public function getUniqueId()
+    {
         return $this->unique_id;
     }
 
@@ -174,18 +187,15 @@ class Order{
      * @param array $domainArray
      * @throws TrustoceanException
      */
-    public function setDomains($domainArray){
-        foreach ($domainArray as $key => $domainName){
-            $theDomain = new domain($domainName);
-            if(trim($domainName) !== $domainName){
-                throw new TrustoceanException('Invalid DomainName('.$domainName.'), please remove any spaces.', 25011);
-            }
-            if(trim($theDomain) == ""){
-                throw new TrustoceanException('Invalid DomainName('.$domainName.').', 25012);
+    public function setDomains($domainArray)
+    {
+        foreach ($domainArray as $key => $domainName) {
+            if (trim($domainName) == "") {
+                throw new TrustoceanException('Invalid DomainName(' . $domainName . ').', 25012);
             }
         }
 
-        if(count($domainArray) != count(array_unique($domainArray))){
+        if (count($domainArray) != count(array_unique($domainArray))) {
             throw new TrustoceanException('Duplicate domain name found, please check your domain names.', 25013);
         }
 
@@ -195,7 +205,8 @@ class Order{
     /**
      * @return array
      */
-    public function getDomains(){
+    public function getDomains()
+    {
         return explode(',', $this->domains);
     }
 
@@ -204,10 +215,11 @@ class Order{
     /**
      * @param bool $isRenew
      */
-    public function setRenew($isRenew = FALSE){
-        if($isRenew == FALSE){
+    public function setRenew($isRenew = FALSE)
+    {
+        if ($isRenew == FALSE) {
             $this->renew = 'no';
-        }else{
+        } else {
             $this->renew = 'yes';
         }
     }
@@ -217,14 +229,16 @@ class Order{
     /**
      * @param string $organizationName
      */
-    public function setOrganizationName($organizationName){
+    public function setOrganizationName($organizationName)
+    {
         $this->organization_name = $organizationName;
     }
 
     /**
      * @return string|NULL
      */
-    public function getOrganizationName(){
+    public function getOrganizationName()
+    {
         return $this->organization_name;
     }
 
@@ -233,14 +247,16 @@ class Order{
     /**
      * @param string $organizationalUnitName
      */
-    public function setOrganizationalUnitName($organizationalUnitName){
+    public function setOrganizationalUnitName($organizationalUnitName)
+    {
         $this->organizationalUnitName = $organizationalUnitName;
     }
 
     /**
      * @return string|null
      */
-    public function getOrganizationalUnitName(){
+    public function getOrganizationalUnitName()
+    {
         return $this->organizationalUnitName;
     }
 
@@ -249,14 +265,16 @@ class Order{
     /**
      * @param string $registered_address_line1
      */
-    public function setRegisteredAddressLine1($registered_address_line1){
+    public function setRegisteredAddressLine1($registered_address_line1)
+    {
         $this->registered_address_line1 = $registered_address_line1;
     }
 
     /**
      * @return string|null
      */
-    public function getRegisteredAddressLine1(){
+    public function getRegisteredAddressLine1()
+    {
         return $this->registered_address_line1;
     }
 
@@ -265,14 +283,16 @@ class Order{
     /**
      * @param string $registered_no
      */
-    public function setRegisteredNo($registered_no){
+    public function setRegisteredNo($registered_no)
+    {
         $this->registered_no = $registered_no;
     }
 
     /**
      * @return null|string
      */
-    public function getRegisteredNo(){
+    public function getRegisteredNo()
+    {
         return $this->registered_no;
     }
 
@@ -281,14 +301,16 @@ class Order{
     /**
      * @param string $country
      */
-    public function setCountry($country){
+    public function setCountry($country)
+    {
         $this->country = $country;
     }
 
     /**
      * @return null|string
      */
-    public function getCountry(){
+    public function getCountry()
+    {
         return $this->country;
     }
 
@@ -297,14 +319,16 @@ class Order{
     /**
      * @param string $state
      */
-    public function setState($state){
+    public function setState($state)
+    {
         $this->state = $state;
     }
 
     /**
      * @return null|string
      */
-    public function getState(){
+    public function getState()
+    {
         return $this->state;
     }
 
@@ -313,14 +337,16 @@ class Order{
     /**
      * @param string $city
      */
-    public function setCity($city){
+    public function setCity($city)
+    {
         $this->city = $city;
     }
 
     /**
      * @return null|string
      */
-    public function getCity(){
+    public function getCity()
+    {
         return $this->city;
     }
 
@@ -329,14 +355,16 @@ class Order{
     /**
      * @param string $postalCode
      */
-    public function setPostalCode($postalCode){
+    public function setPostalCode($postalCode)
+    {
         $this->postal_code = $postalCode;
     }
 
     /**
      * @return null|string
      */
-    public function getPostalCode(){
+    public function getPostalCode()
+    {
         return $this->postal_code;
     }
 
@@ -345,14 +373,16 @@ class Order{
     /**
      * @param string $organizationPhone
      */
-    public function setOrganizationPhone($organizationPhone){
+    public function setOrganizationPhone($organizationPhone)
+    {
         $this->organization_phone = $organizationPhone;
     }
 
     /**
      * @return null|string
      */
-    public function getOrganizationPhone(){
+    public function getOrganizationPhone()
+    {
         return $this->organization_phone;
     }
 
@@ -361,14 +391,16 @@ class Order{
     /**
      * @param string $dateOfIncorporation
      */
-    public function setDateOfIncorporation($dateOfIncorporation){
+    public function setDateOfIncorporation($dateOfIncorporation)
+    {
         $this->date_of_incorporation = $dateOfIncorporation;
     }
 
     /**
      * @return null|string
      */
-    public function getDateOfIncorporation(){
+    public function getDateOfIncorporation()
+    {
         return $this->date_of_incorporation;
     }
 
@@ -377,14 +409,16 @@ class Order{
     /**
      * @param string $contactName
      */
-    public function setContactName($contactName){
+    public function setContactName($contactName)
+    {
         $this->contact_name = $contactName;
     }
 
     /**
      * @return null|string
      */
-    public function getContactName(){
+    public function getContactName()
+    {
         return $this->contact_name;
     }
 
@@ -393,14 +427,16 @@ class Order{
     /**
      * @param string $contactTitle
      */
-    public function setContactTitle($contactTitle){
+    public function setContactTitle($contactTitle)
+    {
         $this->contact_title = $contactTitle;
     }
 
     /**
      * @return null|string
      */
-    public function getContactTitle(){
+    public function getContactTitle()
+    {
         return $this->contact_title;
     }
 
@@ -409,14 +445,16 @@ class Order{
     /**
      * @param string $contactPhone
      */
-    public function setContactPhone($contactPhone){
+    public function setContactPhone($contactPhone)
+    {
         $this->contact_phone = $contactPhone;
     }
 
     /**
      * @return null|string
      */
-    public function getContactPhone(){
+    public function getContactPhone()
+    {
         return $this->contact_phone;
     }
 
@@ -429,7 +467,8 @@ class Order{
     /**
      * @return array
      */
-    public function getDcvInfo(){
+    public function getDcvInfo()
+    {
         return $this->dcv_info;
     }
 
@@ -442,7 +481,8 @@ class Order{
     /**
      * @return null|string
      */
-    public function getOrderStatus(){
+    public function getOrderStatus()
+    {
         return $this->order_status;
     }
 
@@ -455,7 +495,8 @@ class Order{
     /**
      * @return null|string
      */
-    public function getCreatedAt(){
+    public function getCreatedAt()
+    {
         return $this->created_at;
     }
 
@@ -468,7 +509,8 @@ class Order{
     /**
      * @return null|integer
      */
-    public function getOrderId(){
+    public function getOrderId()
+    {
         return $this->order_id;
     }
 
@@ -480,8 +522,8 @@ class Order{
     /**
      * @return null|string
      */
-    public function getRefundStatus(){
+    public function getRefundStatus()
+    {
         return $this->refund_status;
     }
 }
-
