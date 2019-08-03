@@ -64,9 +64,6 @@ class Order{
      * @throws TrustoceanException
      */
     public function setCsrCode(Csr $csrCode){
-        if($csrCode->isWildcardCommonName() && !$this->product->isWildcardProduct()){
-            throw new TrustoceanException('Invalid CommonName of your CSR, this product not allowed protect wildcard domain.', 25008);
-        }
         if(!$csrCode->isEmptyEmailAddress()){
             $this->contact_email = $csrCode->getEmailAddress();
         }
@@ -180,15 +177,6 @@ class Order{
     public function setDomains($domainArray){
         foreach ($domainArray as $key => $domainName){
             $theDomain = new domain($domainName);
-            if(!$theDomain->is_ascii()){
-                throw new TrustoceanException('Invalid DomainName('.$domainName.'), please convert it to ASCII format', 25009);
-            }
-            if($theDomain->is_ip() && $this->product->isSupportIpAddress() === FALSE){
-                throw new TrustoceanException('Invalid DomainName('.$domainName.'), the product you choose does not support an IP address.', 25010);
-            }
-            if(strpos($domainName, '*.') !== FALSE && $this->product->isWildcardProduct() === FALSE){
-                throw new TrustoceanException('Invalid DomainName('.$domainName.'), the product you choose does not support wildcard domain name.', 250014);
-            }
             if(trim($domainName) !== $domainName){
                 throw new TrustoceanException('Invalid DomainName('.$domainName.'), please remove any spaces.', 25011);
             }

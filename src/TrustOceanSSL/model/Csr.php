@@ -25,12 +25,6 @@ class Csr{
      */
     private function setCommonName($commonName){
         $commonName = new domain($commonName);
-        if(!$commonName->is_ascii()){
-            throw new TrustoceanException('Invalid CommonName of your CSR, please convert it to ASCII format', 25004);
-        }
-        if($commonName->is_ip()){
-            throw new TrustoceanException('Invalid CommonName of your CSR, please choose a valid domain name except an IP address.', 25005);
-        }
         if(trim($commonName) !== (string) $commonName){
             throw new TrustoceanException('Invalid CommonName of your CSR, please remove any spaces.', 25006);
         }
